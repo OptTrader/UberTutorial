@@ -15,10 +15,10 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="UberTutorial" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SignUpViewController" customModule="UberTutorial" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -91,7 +91,7 @@
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                 <state key="normal" title="Sign Up"/>
                                 <connections>
-                                    <action selector="signUpAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="inf-jb-WX6"/>
+                                    <action selector="signUpAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2vQ-dP-fLb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgr-iT-nhh">
@@ -105,7 +105,7 @@
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
-                                    <action selector="toggleSignUpAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cxK-Kv-Swx"/>
+                                    <action selector="toggleSignUpAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IvY-2A-S6I"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PAH-ab-G87">
@@ -142,13 +142,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="driverLabel" destination="Hob-5t-zdO" id="bov-Vf-ghz"/>
-                        <outlet property="passwordField" destination="wrx-jl-EDG" id="H91-mZ-gfs"/>
-                        <outlet property="riderLabel" destination="n7b-yx-lMn" id="ohh-e2-phM"/>
-                        <outlet property="signUpButton" destination="dS0-5l-Bu3" id="Gwq-z5-ao4"/>
+                        <outlet property="accountSwitch" destination="IjV-qa-4bU" id="hpV-Is-S4L"/>
+                        <outlet property="driverLabel" destination="Hob-5t-zdO" id="iIQ-1F-Xiz"/>
+                        <outlet property="passwordField" destination="wrx-jl-EDG" id="aAw-pJ-Cnv"/>
+                        <outlet property="riderLabel" destination="n7b-yx-lMn" id="FH5-hc-5LY"/>
+                        <outlet property="signUpButton" destination="dS0-5l-Bu3" id="Io3-lX-NIK"/>
                         <outlet property="switch" destination="IjV-qa-4bU" id="MpF-Kg-YnV"/>
-                        <outlet property="toggleSignUpButton" destination="rgr-iT-nhh" id="gHU-xg-mUC"/>
-                        <outlet property="usernameField" destination="oFf-kJ-FmZ" id="vpj-v0-BzE"/>
+                        <outlet property="toggleSignUpButton" destination="rgr-iT-nhh" id="ylZ-gD-RtX"/>
+                        <outlet property="usernameField" destination="oFf-kJ-FmZ" id="bGo-Tq-bFg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
