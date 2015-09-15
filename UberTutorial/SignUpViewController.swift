@@ -45,7 +45,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate
             
           } else {
             
-            print("Sign up successful")
+            self.performSegueWithIdentifier("riderLogin", sender: self)
           }
         }
         
@@ -55,7 +55,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate
           (user: PFUser?, error: NSError?) -> Void in
           if user != nil
           {
-            print("Login successful")
+            self.performSegueWithIdentifier("riderLogin", sender: self)
           
           } else {
             if let errorString = error?.userInfo["error"] as? String
@@ -90,8 +90,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate
       driverLabel.alpha = 1
       `switch`.alpha = 1
     }
-    
-    
   }
   
   @IBOutlet weak var toggleSignUpButton: UIButton!
@@ -107,6 +105,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate
     view.addGestureRecognizer(tap)
   }
   
+  override func viewDidAppear(animated: Bool) {
+    
+    if PFUser.currentUser()?.username != nil
+    {
+      performSegueWithIdentifier("riderLogin", sender: self)
+    }
+  }
   
   func displayAlert(title: String, message: String)
   {

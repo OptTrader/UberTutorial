@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="aH0-SC-8pj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="k9R-RE-ba7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Sign Up View Controller-->
         <scene sceneID="Lec-sd-lu8">
             <objects>
-                <viewController id="aH0-SC-8pj" customClass="SignUpViewController" customModule="UberTutorial" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Sign Up View Controller" id="aH0-SC-8pj" customClass="SignUpViewController" customModule="UberTutorial" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uWT-h0-wdK"/>
                         <viewControllerLayoutGuide type="bottom" id="ZVw-ye-4Gb"/>
@@ -23,7 +28,7 @@
                                     <constraint firstAttribute="height" constant="21" id="ewL-nn-ifr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7FT-Pd-eAX">
@@ -64,7 +69,7 @@
                                     <constraint firstAttribute="width" constant="16" id="bYT-eQ-suG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iPa-xa-rF2">
@@ -83,7 +88,7 @@
                                     <constraint firstAttribute="height" constant="21" id="jnX-NB-4uX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="29"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qNA-Sh-5Uv">
@@ -100,7 +105,7 @@
                                     <constraint firstAttribute="width" constant="46" id="Lzl-u0-VfO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -134,11 +139,78 @@
                         <outlet property="switch" destination="qNA-Sh-5Uv" id="ntu-gr-anT"/>
                         <outlet property="toggleSignUpButton" destination="iEY-ve-z50" id="ET7-Nj-RGX"/>
                         <outlet property="username" destination="iPa-xa-rF2" id="LkX-PS-wiO"/>
+                        <segue destination="k9R-RE-ba7" kind="show" identifier="riderLogin" id="zDU-rI-WJz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tF7-sp-M0U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1501" y="263"/>
+            <point key="canvasLocation" x="1322" y="226"/>
+        </scene>
+        <!--Rider View Controller-->
+        <scene sceneID="iwg-EK-BQ4">
+            <objects>
+                <viewController title="Rider View Controller" id="k9R-RE-ba7" customClass="RiderViewController" customModule="UberTutorial" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Gx4-wo-je4"/>
+                        <viewControllerLayoutGuide type="bottom" id="aWF-hL-T5k"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tv6-Gd-V8W">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hGG-2y-1fc">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="0XS-B4-tAh"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="UBER" id="HxG-a9-SGQ">
+                                        <barButtonItem key="leftBarButtonItem" title="Logout" id="ooX-rr-4OP">
+                                            <connections>
+                                                <segue destination="aH0-SC-8pj" kind="show" identifier="riderLogout" id="Qy0-zy-per"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="TVr-47-0h1">
+                                <rect key="frame" x="137" y="110" width="327" height="280"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="327" id="23R-bG-2TI"/>
+                                    <constraint firstAttribute="height" constant="280" id="Wbw-FI-txS"/>
+                                </constraints>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWa-lP-rzn">
+                                <rect key="frame" x="234" y="409" width="132" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="5e0-95-QXZ"/>
+                                    <constraint firstAttribute="width" constant="132" id="P88-TO-kfd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Call An Uber"/>
+                                <connections>
+                                    <action selector="callUber:" destination="k9R-RE-ba7" eventType="touchUpInside" id="y1n-4P-QFJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yWa-lP-rzn" firstAttribute="top" secondItem="TVr-47-0h1" secondAttribute="bottom" constant="19" id="A0G-ty-GDf"/>
+                            <constraint firstItem="hGG-2y-1fc" firstAttribute="top" secondItem="Gx4-wo-je4" secondAttribute="bottom" id="Ikt-6n-EIu"/>
+                            <constraint firstAttribute="trailing" secondItem="hGG-2y-1fc" secondAttribute="trailing" id="Rvc-hn-Zl2"/>
+                            <constraint firstItem="yWa-lP-rzn" firstAttribute="centerX" secondItem="Tv6-Gd-V8W" secondAttribute="centerX" id="iSb-Yg-sly"/>
+                            <constraint firstItem="hGG-2y-1fc" firstAttribute="leading" secondItem="Tv6-Gd-V8W" secondAttribute="leading" id="mdT-dV-WFZ"/>
+                            <constraint firstItem="TVr-47-0h1" firstAttribute="centerX" secondItem="Tv6-Gd-V8W" secondAttribute="centerX" id="tCC-Oi-hvM"/>
+                            <constraint firstItem="TVr-47-0h1" firstAttribute="top" secondItem="hGG-2y-1fc" secondAttribute="bottom" constant="46" id="zds-8j-bfm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="map" destination="TVr-47-0h1" id="Xsv-MM-jEv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZcI-mU-fDY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2101" y="226"/>
         </scene>
     </scenes>
 </document>
