@@ -205,6 +205,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="callUberButton" destination="yWa-lP-rzn" id="hiz-IN-D5U"/>
                         <outlet property="map" destination="TVr-47-0h1" id="Xsv-MM-jEv"/>
                     </connections>
                 </viewController>
