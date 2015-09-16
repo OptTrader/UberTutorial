@@ -22,6 +22,7 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
   
   var usernames = [String]()
   var locations = [CLLocationCoordinate2D]()
+  var distances = [CLLocationDistance]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -72,9 +73,20 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
               self.usernames.append(username)
             }
             
-            if let location = object["location"] as? PFGeoPoint
+            if let returnedLocation = object["location"] as? PFGeoPoint
             {
-              self.locations.append(CLLocationCoordinate2DMake(location.latitude, location.longitude))
+              let requestLocation = CLLocationCoordinate2DMake(returnedLocation.latitude, returnedLocation.longitude)
+              
+              self.locations.append(requestLocation)
+              // self.locations.append(CLLocationCoordinate2DMake(location.latitude, location.longitude))
+              
+              let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
+              
+              let driverCLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+              
+              let distance = driverCLLocation.distanceFromLocation(requestCLLocation)
+              
+              self.distances.append(distance / 1000)
             }
             
           }
@@ -123,7 +135,15 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
     
-    cell.textLabel?.text = usernames[indexPath.row] + String(locations[indexPath.row].latitude)
+    let distanceDouble = Double(distances[indexPath.row])
+    
+    let roundedDistance = Double(round(distanceDouble * 10) / 10)
+    
+    // TO DO: reformat number and convert to miles
+    
+    // cell.textLabel?.text = usernames[indexPath.row] + String(locations[indexPath.row].latitude)
+    // cell.textLabel?.text = usernames[indexPath.row] + " - " + String(distances[indexPath.row]) + "km away"
+    cell.textLabel?.text = usernames[indexPath.row] + " - " + String(roundedDistance) + "km away"
     
     return cell
   }
