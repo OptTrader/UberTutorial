@@ -6,6 +6,7 @@
     <customFonts key="customFonts">
         <mutableArray key="HelveticaNeue.ttc">
             <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -230,6 +231,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="CD8-ge-aUh" kind="show" identifier="showViewRequest" id="QaE-bb-yfU"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -249,6 +253,54 @@
             </objects>
             <point key="canvasLocation" x="2772" y="655"/>
         </scene>
+        <!--View Request-->
+        <scene sceneID="5JT-JN-Fol">
+            <objects>
+                <viewController title="View Request" id="CD8-ge-aUh" customClass="RequestViewController" customModule="UberTutorial" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YMr-EB-vTS"/>
+                        <viewControllerLayoutGuide type="bottom" id="5gI-7m-tj1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6e6-FG-sH8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hVB-6g-Ysy">
+                                <rect key="frame" x="137" y="110" width="327" height="280"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="327" id="XVv-H6-hu8"/>
+                                    <constraint firstAttribute="height" constant="280" id="xQx-fW-qWc"/>
+                                </constraints>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7KK-R6-jbr">
+                                <rect key="frame" x="234" y="409" width="132" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="WLm-ZF-MjM"/>
+                                    <constraint firstAttribute="width" constant="132" id="gIi-Gn-mJ1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Pick Up Rider"/>
+                                <connections>
+                                    <action selector="pickUpRiderAction:" destination="CD8-ge-aUh" eventType="touchUpInside" id="iBH-aO-BZZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7KK-R6-jbr" firstAttribute="centerX" secondItem="6e6-FG-sH8" secondAttribute="centerX" id="4aQ-Gn-Dbe"/>
+                            <constraint firstItem="hVB-6g-Ysy" firstAttribute="top" secondItem="YMr-EB-vTS" secondAttribute="bottom" constant="46" id="bTa-7h-4IN"/>
+                            <constraint firstItem="7KK-R6-jbr" firstAttribute="top" secondItem="hVB-6g-Ysy" secondAttribute="bottom" constant="19" id="dg9-Y0-8xT"/>
+                            <constraint firstItem="hVB-6g-Ysy" firstAttribute="centerX" secondItem="6e6-FG-sH8" secondAttribute="centerX" id="e0n-dv-G4M"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="map" destination="hVB-6g-Ysy" id="gsP-az-exP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y64-7u-hXH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3405" y="653"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="z7C-B9-nGG">
             <objects>
@@ -267,6 +319,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="M7S-4P-tNp"/>
+        <segue reference="Qy0-zy-per"/>
     </inferredMetricsTieBreakers>
 </document>

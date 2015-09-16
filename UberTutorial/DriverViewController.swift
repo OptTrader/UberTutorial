@@ -32,9 +32,6 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
     locationManager.requestWhenInUseAuthorization()
     locationManager.startUpdatingLocation()
-    
-    
-
   }
 
   // MARK: - Methods
@@ -45,11 +42,12 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
     self.latitude = location.latitude
     self.longitude = location.longitude
     
-    print("locations = \(location.latitude) \(location.longitude)")
+    // print("locations = \(location.latitude) \(location.longitude)")
     
     // create query function
     
     let query = PFQuery(className:"riderRequest")
+    
     query.whereKey("location", nearGeoPoint: PFGeoPoint(latitude: location.latitude, longitude: location.longitude))
     query.limit = 10
     query.findObjectsInBackgroundWithBlock {
@@ -57,8 +55,6 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
       
       if error == nil
       {
-        print("Successfully retrieved \(objects!.count).")
-        
         if let objects = objects as? [PFObject]
         {
           // remove existing data
@@ -68,55 +64,40 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
           
           for object in objects
           {
-            if let username = object["username"] as? String
+            if object["driverResponded"] == nil
             {
-              self.usernames.append(username)
+              if let username = object["username"] as? String
+              {
+                self.usernames.append(username)
+              }
+              
+              if let returnedLocation = object["location"] as? PFGeoPoint
+              {
+                let requestLocation = CLLocationCoordinate2DMake(returnedLocation.latitude, returnedLocation.longitude)
+                
+                self.locations.append(requestLocation)
+                // self.locations.append(CLLocationCoordinate2DMake(location.latitude, location.longitude))
+                
+                let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
+                
+                let driverCLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                
+                let distance = driverCLLocation.distanceFromLocation(requestCLLocation)
+                
+                self.distances.append(distance / 1000)
+              }
             }
-            
-            if let returnedLocation = object["location"] as? PFGeoPoint
-            {
-              let requestLocation = CLLocationCoordinate2DMake(returnedLocation.latitude, returnedLocation.longitude)
-              
-              self.locations.append(requestLocation)
-              // self.locations.append(CLLocationCoordinate2DMake(location.latitude, location.longitude))
-              
-              let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
-              
-              let driverCLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
-              
-              let distance = driverCLLocation.distanceFromLocation(requestCLLocation)
-              
-              self.distances.append(distance / 1000)
-            }
-            
           }
           self.tableView.reloadData()
           
-          print(self.locations)
-          print(self.usernames)
+//          print(self.locations)
+//          print(self.usernames)
         }
       } else {
         
         print(error)
       }
     }
-    
-//    
-//    
-//    let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-//    let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//    
-//    //self.map.setRegion(region, animated: true)
-//    
-//    // remove annotation
-//    //self.map.removeAnnotations(map.annotations)
-//    
-//    // add pin
-//    let pinLocation: CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.latitude, location.longitude)
-//    let objectAnnotation = MKPointAnnotation()
-//    objectAnnotation.coordinate = pinLocation
-//    objectAnnotation.title = "Your Location"
-//    //self.map.addAnnotation(objectAnnotation)
   }
   
 
@@ -133,10 +114,9 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
     let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-    
     let distanceDouble = Double(distances[indexPath.row])
-    
     let roundedDistance = Double(round(distanceDouble * 10) / 10)
     
     // TO DO: reformat number and convert to miles
@@ -154,7 +134,17 @@ class DriverViewController: UITableViewController, CLLocationManagerDelegate
     {
       navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: false)
       PFUser.logOut()
+    
+    } else if segue.identifier == "showViewRequest" {
+      
+      if let destination = segue.destinationViewController as? RequestViewController
+      {
+        destination.requestLocation = locations[(tableView.indexPathForSelectedRow?.row)!]
+        destination.requestUserName = usernames[(tableView.indexPathForSelectedRow?.row)!]
+      }
     }
+    
+    
   }
  
 
