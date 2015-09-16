@@ -45,7 +45,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate
             
           } else {
             
-            self.performSegueWithIdentifier("riderLogin", sender: self)
+            if self.`switch`.on == true
+            {
+              self.performSegueWithIdentifier("driverLogin", sender: self)
+              
+            } else {
+             
+              self.performSegueWithIdentifier("riderLogin", sender: self)
+            }
           }
         }
         
@@ -53,11 +60,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate
         
         PFUser.logInWithUsernameInBackground(username.text!, password: password.text!) {
           (user: PFUser?, error: NSError?) -> Void in
-          if user != nil
+          if let user = user
           {
-            self.performSegueWithIdentifier("riderLogin", sender: self)
+            if user["isDriver"]! as! Bool == true
+            {
+              self.performSegueWithIdentifier("driverLogin", sender: self)
+              
+            } else {
+              
+              self.performSegueWithIdentifier("riderLogin", sender: self)
+            }
           
           } else {
+            
             if let errorString = error?.userInfo["error"] as? String
             {
               self.displayAlert("Login Failed", message: errorString)
@@ -109,7 +124,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate
     
     if PFUser.currentUser()?.username != nil
     {
-      performSegueWithIdentifier("riderLogin", sender: self)
+      if PFUser.currentUser()?["isDriver"]! as! Bool == true
+      {
+        self.performSegueWithIdentifier("driverLogin", sender: self)
+        
+      } else {
+        
+        self.performSegueWithIdentifier("riderLogin", sender: self)
+      }
     }
   }
   
