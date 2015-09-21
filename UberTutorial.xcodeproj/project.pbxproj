@@ -229,6 +229,11 @@
 				TargetAttributes = {
 					7AD859D91BA1BFC200EBD42A = {
 						CreatedOnToolsVersion = 7.0;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					7AD859ED1BA1BFC200EBD42A = {
 						CreatedOnToolsVersion = 7.0;

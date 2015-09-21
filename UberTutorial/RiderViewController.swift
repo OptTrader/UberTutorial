@@ -18,7 +18,9 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
   var locationManager: CLLocationManager!
   var latitude: CLLocationDegrees = 0
   var longitude: CLLocationDegrees = 0
+  
   var riderRequestActive = false
+  var driverOnTheWay = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -98,22 +100,112 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     self.latitude = location.latitude
     self.longitude = location.longitude
     
-    print("locations = \(location.latitude) \(location.longitude)")
+    // query
+    let query = PFQuery(className:"riderRequest")
+    query.whereKey("username", equalTo: PFUser.currentUser()!.username!)
     
-    let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-    let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-    
-    self.map.setRegion(region, animated: true)
-    
-    // remove annotation
-    self.map.removeAnnotations(map.annotations)
-    
-    // add pin
-    let pinLocation: CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.latitude, location.longitude)
-    let objectAnnotation = MKPointAnnotation()
-    objectAnnotation.coordinate = pinLocation
-    objectAnnotation.title = "Your Location"
-    self.map.addAnnotation(objectAnnotation)
+    query.findObjectsInBackgroundWithBlock {
+      (objects: [AnyObject]?, error: NSError?) -> Void in
+      
+      if error == nil
+      {
+        if let objects = objects as? [PFObject]
+        {
+          for object in objects {
+            
+            if let driverUsername = object["driverResponded"]
+            {
+              // self.callUberButton.setTitle("Driver is on the way!", forState: UIControlState.Normal)
+              
+              // another query
+              
+              let query = PFQuery(className:"driverLocation")
+              query.whereKey("username", equalTo: driverUsername)
+              
+              query.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]?, error: NSError?) -> Void in
+                
+                if error == nil
+                {
+                  if let objects = objects as? [PFObject]
+                  {
+                    for object in objects {
+                      
+                      if let driverLocation = object["driverLocation"] as? PFGeoPoint
+                      {
+                        // print(driverLocation)
+                        
+                        let driverCLLocation = CLLocation(latitude: driverLocation.latitude, longitude: driverLocation.longitude)
+                        let riderCLLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                        
+                        let distanceMeters = riderCLLocation.distanceFromLocation(driverCLLocation)
+                        let distanceKM = distanceMeters / 1000
+                        let roundedTwoDigitDistance = Double(round(distanceKM * 10) / 10)
+                      
+                        // print(roundedTwoDigitDistance)
+                        
+                        self.callUberButton.setTitle("Driver is \(roundedTwoDigitDistance) km away!", forState: UIControlState.Normal)
+                        
+                        self.driverOnTheWay = true
+                        
+                        let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+                        
+                        _ = abs(driverLocation.latitude - location.latitude) * 2 + 0.005
+                        _ = abs(driverLocation.longitude - location.longitude) * 2 + 0.005
+                        
+                        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                        
+                        self.map.setRegion(region, animated: true)
+                        
+                        // remove annotation
+                        self.map.removeAnnotations(self.map.annotations)
+                        
+                        // add pin
+                        var pinLocation: CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.latitude, location.longitude)
+                        var objectAnnotation = MKPointAnnotation()
+                        objectAnnotation.coordinate = pinLocation
+                        objectAnnotation.title = "Your Location"
+                        self.map.addAnnotation(objectAnnotation)
+                        
+                        pinLocation = CLLocationCoordinate2DMake(driverLocation.latitude, driverLocation.longitude)
+                        objectAnnotation = MKPointAnnotation()
+                        objectAnnotation.coordinate = pinLocation
+                        objectAnnotation.title = "Driver's Location"
+                        self.map.addAnnotation(objectAnnotation)
+                        
+                        
+                        // TO DO: add push notifications to cancel, billings, 
+                      }
+                    }
+                  }
+                }
+              }
+           
+            }
+          }
+        }
+      }
+    }
+  
+    if (driverOnTheWay == false)
+    {
+      // print("locations = \(location.latitude) \(location.longitude)")
+      
+      let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+      let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+      
+      self.map.setRegion(region, animated: true)
+      
+      // remove annotation
+      self.map.removeAnnotations(map.annotations)
+      
+      // add pin
+      let pinLocation: CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.latitude, location.longitude)
+      let objectAnnotation = MKPointAnnotation()
+      objectAnnotation.coordinate = pinLocation
+      objectAnnotation.title = "Your Location"
+      self.map.addAnnotation(objectAnnotation)
+    }
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
